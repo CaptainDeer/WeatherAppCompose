@@ -1,4 +1,4 @@
-package com.example.weatherappcompose.service.api.model
+package com.example.weatherappcompose.service.model
 
 import com.squareup.moshi.Json
 

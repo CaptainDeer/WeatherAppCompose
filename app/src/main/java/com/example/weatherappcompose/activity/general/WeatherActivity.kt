@@ -7,17 +7,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.weatherappcompose.activity.general.screens.*
 import com.example.weatherappcompose.activity.general.theme.WeatherAppComposeTheme
+import com.example.weatherappcompose.activity.general.viewmodels.LookupViewModel
 import com.example.weatherappcompose.utils.navigation.Routes
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WeatherActivity : ComponentActivity() {
+
+    lateinit var viewModel: LookupViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(this)[LookupViewModel::class.java]
 
         setContent {
             WeatherAppComposeTheme {
@@ -45,7 +54,7 @@ class WeatherActivity : ComponentActivity() {
                             }
                         }
                         composable(route = Routes.WeatherScreen.routes) {
-                            WeatherScreen(navHostController) {
+                            WeatherScreen(viewModel,navHostController) {
                                 navHostController.navigate(Routes.LookupScreen.routes) {
                                     popUpTo(Routes.LookupScreen.routes)
                                     launchSingleTop = true

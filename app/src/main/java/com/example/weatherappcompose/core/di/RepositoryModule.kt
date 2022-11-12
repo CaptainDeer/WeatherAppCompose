@@ -1,8 +1,9 @@
 package com.example.weatherappcompose.core.di
 
-import com.example.weatherappcompose.service.api.IRWeatherService
-import com.example.weatherappcompose.service.api.IWeatherService
-import com.example.weatherappcompose.service.api.WeatherRepositoryImpl
+
+import com.example.weatherappcompose.service.WeatherRepository
+import com.example.weatherappcompose.service.WeatherRepositoryImpl
+import com.example.weatherappcompose.service.api.WeatherAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,6 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun providesRandomRepository(weatherApi: IRWeatherService): IWeatherService =
+    fun providesRepository(weatherApi: WeatherAPI): WeatherRepository =
         WeatherRepositoryImpl(weatherApi)
 }

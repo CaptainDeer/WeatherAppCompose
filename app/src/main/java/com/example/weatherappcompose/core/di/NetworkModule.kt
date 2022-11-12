@@ -1,7 +1,7 @@
 package com.example.weatherappcompose.core.di
 
 import com.example.weatherappcompose.BuildConfig
-import com.example.weatherappcompose.service.api.IRWeatherService
+import com.example.weatherappcompose.service.api.WeatherAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +40,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesWeatherApi(retrofit: Retrofit): IRWeatherService =
-        retrofit.create(IRWeatherService::class.java)
+    fun providesWeatherApi(retrofit: Retrofit): WeatherAPI =
+        retrofit.create(WeatherAPI::class.java)
 
 }

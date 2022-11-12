@@ -7,37 +7,46 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.weatherappcompose.activity.general.components.TopAppBarComponent
+import com.example.weatherappcompose.activity.general.viewmodels.LookupViewModel
 import com.example.weatherappcompose.utils.navigation.Routes
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.coroutineScope
 
 /**
  * Created by Erik Hernandez on 11/12/2022.
  */
 
 @Composable
-fun WeatherScreen(navHostController: NavHostController, navigateBack: () -> Unit){
+fun WeatherScreen(viewModel: LookupViewModel = hiltViewModel(), navHostController: NavHostController, navigateBack: () -> Unit){
     Column(verticalArrangement = Arrangement.Top) {
         TopAppBarComponent(navigateBack)
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            WeatherComponents(navHostController)
+            WeatherComponents(viewModel, navHostController)
         }
     }
 }
 
 @Composable
-fun WeatherComponents(navHostController: NavHostController){
-    val items = listOf("a","b","c","dario","ffff","eeeeee","","","","","","","","","","","","","","","","","","","")
-
+fun WeatherComponents(viewModel: LookupViewModel = hiltViewModel(), navHostController: NavHostController){
+    val list = remember {
+        viewModel.forecastList
+    }
     LazyColumn{
-        this.items(items = items){
+        items(list){
             Column(modifier = Modifier.clickable {
-                navHostController.navigate(Routes.WeatherDetailsScreen.routes)
+                viewModel.getForecast()
+                println(viewModel.getForecast())
+//                navHostController.navigate(Routes.WeatherDetailsScreen.routes)
             }) {
+                println(list.size)
                 WeatherItem()
             }
         }

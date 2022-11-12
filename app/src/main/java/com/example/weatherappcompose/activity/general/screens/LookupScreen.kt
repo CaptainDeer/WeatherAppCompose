@@ -12,17 +12,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
 /**
  * Created by Erik Hernandez on 11/11/2022.
  */
 
 @Composable
-fun LookupScreen(navigateToWeatherDetailsScreen : () -> Unit) {
+fun LookupScreen(
+    navigateToWeatherDetailsScreen: () -> Unit
+) {
     LookupComponents(navigateToWeatherDetailsScreen)
 }
 
 @Composable
-private fun LookupComponents(navigateToWeatherDetailsScreen : () -> Unit) {
+private fun LookupComponents(navigateToWeatherDetailsScreen: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -58,7 +61,7 @@ private fun SearchComponent() {
 }
 
 @Composable
-private fun SearchButtonComponent(navigateToWeatherDetailsScreen : () -> Unit) {
+private fun SearchButtonComponent(navigateToWeatherDetailsScreen: () -> Unit) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,7 +75,7 @@ private fun SearchButtonComponent(navigateToWeatherDetailsScreen : () -> Unit) {
         ),
         onClick = {
             navigateToWeatherDetailsScreen()
-                  },
+        },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Transparent, contentColor = Color.Black,
             disabledBackgroundColor = Color.Transparent,

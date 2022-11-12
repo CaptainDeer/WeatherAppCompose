@@ -1,4 +1,4 @@
-package com.example.weatherappcompose.service.api.domain.model
+package com.example.weatherappcompose.service.domain.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
