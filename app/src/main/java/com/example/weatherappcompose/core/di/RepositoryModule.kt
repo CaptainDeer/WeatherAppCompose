@@ -4,6 +4,8 @@ package com.example.weatherappcompose.core.di
 import com.example.weatherappcompose.service.WeatherRepository
 import com.example.weatherappcompose.service.WeatherRepositoryImpl
 import com.example.weatherappcompose.service.api.WeatherAPI
+import com.example.weatherappcompose.service.domain.model.WeatherDao
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,10 +17,9 @@ import javax.inject.Singleton
  */
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+abstract class RepositoryModule {
 
     @Singleton
-    @Provides
-    fun providesRepository(weatherApi: WeatherAPI): WeatherRepository =
-        WeatherRepositoryImpl(weatherApi)
+    @Binds
+    abstract fun weatherRepository(repo: WeatherRepositoryImpl): WeatherRepository
 }

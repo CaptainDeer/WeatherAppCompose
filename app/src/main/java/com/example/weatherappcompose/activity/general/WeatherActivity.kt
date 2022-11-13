@@ -41,9 +41,7 @@ class WeatherActivity : ComponentActivity() {
                         startDestination = Routes.LookupScreen.routes
                     ) {
                         composable(route = Routes.LookupScreen.routes) {
-                            LookupScreen() {
-                                navHostController.navigate(Routes.WeatherScreen.routes)
-                            }
+                            LookupScreen(viewModel, navHostController)
                         }
                         composable(route = Routes.WeatherDetailsScreen.routes) {
                             WeatherDetailsScreen() {

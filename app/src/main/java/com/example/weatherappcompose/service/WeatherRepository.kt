@@ -1,5 +1,7 @@
 package com.example.weatherappcompose.service
 
+import androidx.lifecycle.LiveData
+import com.example.weatherappcompose.service.domain.model.ForecastModel
 import com.example.weatherappcompose.service.model.Forecast
 
 /**
@@ -7,4 +9,6 @@ import com.example.weatherappcompose.service.model.Forecast
  */
 interface WeatherRepository {
     suspend fun  getForecast(city: String): Forecast?
+    suspend fun getWeather():MutableList<ForecastModel>
+    suspend fun delete()
 }

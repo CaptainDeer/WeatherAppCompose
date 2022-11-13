@@ -1,10 +1,15 @@
 package com.example.weatherappcompose.core.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.weatherappcompose.BuildConfig
+import com.example.weatherappcompose.service.domain.WeatherDataSource
 import com.example.weatherappcompose.service.api.WeatherAPI
+import com.example.weatherappcompose.service.domain.model.WeatherDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,4 +48,15 @@ object NetworkModule {
     fun providesWeatherApi(retrofit: Retrofit): WeatherAPI =
         retrofit.create(WeatherAPI::class.java)
 
+    @Singleton
+    @Provides
+    fun weatherDataSource(@ApplicationContext context: Context): WeatherDataSource {
+        return Room.databaseBuilder(context, WeatherDataSource::class.java, "weather_database")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    fun weatherDao(db: WeatherDataSource): WeatherDao = db.weatherDao()
 }

@@ -37,16 +37,14 @@ fun WeatherScreen(viewModel: LookupViewModel = hiltViewModel(), navHostControlle
 @Composable
 fun WeatherComponents(viewModel: LookupViewModel = hiltViewModel(), navHostController: NavHostController){
     val list = remember {
-        viewModel.forecastList
+        viewModel.weather
     }
     LazyColumn{
+
         items(list){
             Column(modifier = Modifier.clickable {
-                viewModel.getForecast()
-                println(viewModel.getForecast())
-//                navHostController.navigate(Routes.WeatherDetailsScreen.routes)
+                navHostController.navigate(Routes.WeatherDetailsScreen.routes)
             }) {
-                println(list.size)
                 WeatherItem()
             }
         }

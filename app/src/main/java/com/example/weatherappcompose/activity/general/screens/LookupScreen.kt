@@ -11,6 +11,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.weatherappcompose.activity.general.viewmodels.LookupViewModel
 
 
 /**
@@ -19,20 +22,22 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun LookupScreen(
-    navigateToWeatherDetailsScreen: () -> Unit
+    viewModel: LookupViewModel = hiltViewModel(),
+    navHostController: NavHostController
 ) {
-    LookupComponents(navigateToWeatherDetailsScreen)
+    viewModel.delete()
+    LookupComponents(viewModel, navHostController)
 }
 
 @Composable
-private fun LookupComponents(navigateToWeatherDetailsScreen: () -> Unit) {
+private fun LookupComponents(viewModel: LookupViewModel = hiltViewModel(), navHostController: NavHostController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SearchComponent()
-        SearchButtonComponent(navigateToWeatherDetailsScreen)
+        SearchButtonComponent(viewModel, navHostController)
     }
 }
 
@@ -61,7 +66,7 @@ private fun SearchComponent() {
 }
 
 @Composable
-private fun SearchButtonComponent(navigateToWeatherDetailsScreen: () -> Unit) {
+private fun SearchButtonComponent(viewModel: LookupViewModel = hiltViewModel(), navHostController: NavHostController) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -74,7 +79,7 @@ private fun SearchButtonComponent(navigateToWeatherDetailsScreen: () -> Unit) {
             focusedElevation = 0.dp
         ),
         onClick = {
-            navigateToWeatherDetailsScreen()
+            viewModel.searchWeather(navHostController)
         },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Color.Transparent, contentColor = Color.Black,
