@@ -9,12 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.weatherappcompose.activity.general.viewmodels.LookupViewModel
 
 /**
  * Created by Erik Hernandez on 11/11/2022.
  */
 @Composable
-internal fun TopAppBarComponent(navigateBack: () -> Unit) {
+internal fun TopAppBarComponent(
+    viewModel: LookupViewModel = hiltViewModel(),
+    navigateBack: () -> Unit
+) {
     TopAppBar {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
             IconButton(onClick = {
@@ -29,7 +34,7 @@ internal fun TopAppBarComponent(navigateBack: () -> Unit) {
             LocalTextStyle provides MaterialTheme.typography.h6
         ) {
             Text(
-                text = "Set screen Title",
+                text = viewModel.city.value.toString(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)

@@ -1,13 +1,11 @@
 package com.example.weatherappcompose.service
 
-import androidx.lifecycle.LiveData
 import com.example.weatherappcompose.BuildConfig
 import com.example.weatherappcompose.service.api.WeatherAPI
 import com.example.weatherappcompose.service.domain.mappers.toDomain
 import com.example.weatherappcompose.service.domain.model.ForecastModel
 import com.example.weatherappcompose.service.domain.model.WeatherDao
 import com.example.weatherappcompose.service.model.Forecast
-import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 /**
@@ -20,7 +18,7 @@ class WeatherRepositoryImpl @Inject constructor(
     WeatherRepository {
     override suspend fun getForecast(city: String): Forecast? {
         val forecast = weatherService.getForecast(city = city, key = BuildConfig.API_KEY)
-        forecast?.forecastList?.map { it.toDomain("Tonala") }?.forEach{
+        forecast?.forecastList?.map { it.toDomain(city) }?.forEach{
             weatherDao.insert(it)
         }
         return forecast
@@ -28,6 +26,6 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun getWeather(): MutableList<ForecastModel> = weatherDao.getAll()
     override suspend fun delete() {
-        weatherDao.delete("Tonala")
+        weatherDao.delete()
     }
 }

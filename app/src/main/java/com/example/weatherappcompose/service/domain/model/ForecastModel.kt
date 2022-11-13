@@ -31,6 +31,6 @@ interface WeatherDao{
     @Query("SELECT * FROM weather")
     fun getAll(): MutableList<ForecastModel>
 
-    @Query("DELETE FROM weather WHERE cityName = :city")
-    fun delete(city: String)
+    @Query("DELETE FROM weather")
+    fun delete()
 }

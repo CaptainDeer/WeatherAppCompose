@@ -1,6 +1,5 @@
 package com.example.weatherappcompose.service
 
-import androidx.lifecycle.LiveData
 import com.example.weatherappcompose.service.domain.model.ForecastModel
 import com.example.weatherappcompose.service.model.Forecast
 

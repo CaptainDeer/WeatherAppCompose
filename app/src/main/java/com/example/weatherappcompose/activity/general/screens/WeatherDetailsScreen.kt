@@ -6,26 +6,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.weatherappcompose.activity.general.components.TopAppBarComponent
+import com.example.weatherappcompose.activity.general.viewmodels.LookupViewModel
+import com.example.weatherappcompose.service.domain.model.ForecastModel
 
 /**
  * Created by Erik Hernandez on 11/11/2022.
  */
 @Composable
-fun WeatherDetailsScreen(navigateBack: () -> Unit) {
+fun WeatherDetailsScreen(viewModel: LookupViewModel = hiltViewModel(), navigateBack: () -> Unit) {
     Column(verticalArrangement = Arrangement.Top) {
-        TopAppBarComponent(navigateBack)
+        TopAppBarComponent(viewModel,navigateBack)
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            WeatherDetailsComponents()
+            WeatherDetailsComponents(viewModel)
         }
     }
 }
 
 @Composable
-fun WeatherDetailsComponents() {
+fun WeatherDetailsComponents(viewModel: LookupViewModel = hiltViewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,14 +39,14 @@ fun WeatherDetailsComponents() {
                 .fillMaxWidth()
                 .padding(bottom = 20.dp), horizontalArrangement = Arrangement.Center
         ) {
-            DegreesComponent()
+            viewModel.weatherDetails.value?.let { DegreesComponent(it) }
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 20.dp), horizontalArrangement = Arrangement.End
         ) {
-            FeelsLikeComponent()
+            viewModel.weatherDetails.value?.let { FeelsLikeComponent(it) }
         }
         Row(
             modifier = Modifier
@@ -51,7 +54,7 @@ fun WeatherDetailsComponents() {
                 .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.Start
         ) {
-            CloudsComponent()
+            viewModel.weatherDetails.value?.let { CloudsComponent(it) }
         }
         Row(
             modifier = Modifier
@@ -59,27 +62,27 @@ fun WeatherDetailsComponents() {
                 .padding(vertical = 10.dp),
             horizontalArrangement = Arrangement.Start
         ) {
-            DetailsComponent()
+            viewModel.weatherDetails.value?.let { DetailsComponent(it) }
         }
     }
 }
 
 @Composable
-fun DegreesComponent() {
-    Text(text = "100", fontSize = 80.sp)
+fun DegreesComponent(forecastModel: ForecastModel) {
+    Text(text = forecastModel.temperature.toString(), fontSize = 80.sp)
 }
 
 @Composable
-fun FeelsLikeComponent() {
-    Text(text = "Feels like: 76", fontSize = 22.sp)
+fun FeelsLikeComponent(forecastModel: ForecastModel) {
+    Text(text = "Feels like: ${forecastModel.feelsLike}", fontSize = 22.sp)
 }
 
 @Composable
-fun CloudsComponent() {
-    Text(text = "Clouds = Muchas", fontSize = 35.sp)
+fun CloudsComponent(forecastModel: ForecastModel) {
+    Text(text = forecastModel.weatherName, fontSize = 35.sp)
 }
 
 @Composable
-fun DetailsComponent() {
-    Text(text = "Details of the weather today in the request", fontSize = 18.sp)
+fun DetailsComponent(forecastModel: ForecastModel) {
+    Text(text = forecastModel.weatherDescription, fontSize = 18.sp)
 }

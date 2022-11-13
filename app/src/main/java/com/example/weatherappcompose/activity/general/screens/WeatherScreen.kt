@@ -7,24 +7,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.weatherappcompose.activity.general.components.TopAppBarComponent
 import com.example.weatherappcompose.activity.general.viewmodels.LookupViewModel
-import com.example.weatherappcompose.utils.navigation.Routes
-import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.coroutineScope
+
 
 /**
  * Created by Erik Hernandez on 11/12/2022.
  */
 
 @Composable
-fun WeatherScreen(viewModel: LookupViewModel = hiltViewModel(), navHostController: NavHostController, navigateBack: () -> Unit){
+fun WeatherScreen(
+    viewModel: LookupViewModel = hiltViewModel(),
+    navHostController: NavHostController,
+    navigateBack: () -> Unit
+) {
     Column(verticalArrangement = Arrangement.Top) {
-        TopAppBarComponent(navigateBack)
+        TopAppBarComponent(viewModel,navigateBack)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -35,17 +38,22 @@ fun WeatherScreen(viewModel: LookupViewModel = hiltViewModel(), navHostControlle
 }
 
 @Composable
-fun WeatherComponents(viewModel: LookupViewModel = hiltViewModel(), navHostController: NavHostController){
-    val list = remember {
-        viewModel.weather
-    }
-    LazyColumn{
+fun WeatherComponents(
+    viewModel: LookupViewModel = hiltViewModel(),
+    navHostController: NavHostController
+) {
+    val list by viewModel.weather.observeAsState()
 
-        items(list){
-            Column(modifier = Modifier.clickable {
-                navHostController.navigate(Routes.WeatherDetailsScreen.routes)
-            }) {
-                WeatherItem()
+    LazyColumn {
+
+        list?.let {
+            items(it) {
+                Column(modifier = Modifier.clickable {
+
+                    viewModel.weatherDetails(it, navHostController)
+                }) {
+                    WeatherItem(it)
+                }
             }
         }
     }
