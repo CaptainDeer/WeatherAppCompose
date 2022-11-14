@@ -3,9 +3,9 @@ package com.example.weatherappcompose.core.di
 import android.content.Context
 import androidx.room.Room
 import com.example.weatherappcompose.BuildConfig
-import com.example.weatherappcompose.service.domain.WeatherDataSource
-import com.example.weatherappcompose.service.api.WeatherAPI
-import com.example.weatherappcompose.service.domain.model.WeatherDao
+import com.example.weatherappcompose.domain.WeatherDataSource
+import com.example.weatherappcompose.data.api.WeatherAPI
+import com.example.weatherappcompose.domain.model.WeatherDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,13 +1,10 @@
 package com.example.weatherappcompose.core.di
 
 
-import com.example.weatherappcompose.service.WeatherRepository
-import com.example.weatherappcompose.service.WeatherRepositoryImpl
-import com.example.weatherappcompose.service.api.WeatherAPI
-import com.example.weatherappcompose.service.domain.model.WeatherDao
+import com.example.weatherappcompose.domain.WeatherRepository
+import com.example.weatherappcompose.data.WeatherRepositoryImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
